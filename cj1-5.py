@@ -9,15 +9,24 @@ Follow the basic Python program structure, including a main program function.
 '''
 
 import math 
+import numpy as np
+from astropy.table import Table
+
 
 def sinVsX():
 	print("Each value x represents n/1000 of 2pi, where our range is [0,2pi].")
 	print("NOTE: Only printing 5 digits past decimal place.\n")
 	
-	print("x\tsin(x)\t")
+	listX = np.array([], dtype=np.int32)
+	list_sinX = np.array([], dtype=np.float32)
 	for i in range(1000):
-		x = ((2*math.pi)/1000) * i
-		print(f"{x:.5f}\t{math.sin(x):.5f}\t")
+		x = (2*math.pi) * (i/1000)
+
+		listX = np.append(listX, x)
+		list_sinX = np.append(list_sinX, math.sin(x))
+		
+	t = Table([listX, list_sinX], names = ['x','sin(x)'])
+	t.pprint_all()
 
 def main():
 	sinVsX()
